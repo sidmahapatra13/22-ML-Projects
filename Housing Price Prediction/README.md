@@ -34,35 +34,6 @@ Housing Price Prediction/
 9. Small model comparison: Ridge vs Random Forest
 10. Save artifact to `artifacts/` and predict on new input
 
-## Run it
-Use the shared env exactly so imports resolve correctly:
-
-```bash
-cd "/Users/siddhantmahapatra/Documents/Coding/22 ML Projects/Housing Price Prediction"
-env -u PYTHONPATH "/Users/siddhantmahapatra/Documents/Coding/22 ML Projects/env/bin/python" -m notebook
-```
-
-Or run from command line:
-```bash
-env -u PYTHONPATH "/Users/siddhantmahapatra/Documents/Coding/22 ML Projects/env/bin/python" 01_notebook.ipynb
-```
-
-If Jupyter is unavailable, you can run with the same env-prefixed Python:
-```bash
-env -u PYTHONPATH "/Users/siddhantmahapatra/Documents/Coding/22 ML Projects/env/bin/python" -m pip notebook
-```
-
-## Artifacts
-- `artifacts/housing_price_pipeline.joblib`
-- `artifacts/metrics.json`
-
-Load the saved pipeline:
-```python
-import joblib
-model = joblib.load("/Users/siddhantmahapatra/Documents/Coding/22 ML Projects/Housing Price Prediction/artifacts/housing_price_pipeline.joblib")
-model.predict(new_dataframe)
-```
-
 ## Dataset
 - Source: California Housing dataset
 - Target: `median_house_value`
@@ -71,4 +42,3 @@ model.predict(new_dataframe)
 ## Notes
 - This notebook is intended as a portfolio-ready reference.
 - Final model selection uses test-set RMSE from cross-validated candidates.
-- Do not touch the parent `22 ML Projects` workspace rules from inside this folder.
