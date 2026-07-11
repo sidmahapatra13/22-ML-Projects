@@ -6,14 +6,14 @@ A growing collection of machine learning projects built from scratch — coverin
 
 ## Completed Projects
 
-### 1. Titanic Survival Prediction
+### 1. Titanic Survival Prediction 🛳️
 Classic binary classification problem: predict passenger survival using logistic regression, decision trees, KNN, random forest, SVC, and a voting classifier. Includes feature engineering from `Cabin`, `Ticket`, and `Name` columns. Best accuracy ~83.6%.
 
 **Stack:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn
 
 ---
 
-### 2. Housing Price Prediction
+### 2. Housing Price Prediction 🏡
 Predict California district median house value from census-block features. Uses stratified train/test splits, feature engineering (`rooms_per_house`, `bedrooms_ratio`, `people_per_house`), `ColumnTransformer` preprocessing, and compares Decision Tree, Random Forest (tuned via `GridSearchCV`), and SGDRegressor. Saved pipeline artifact.
 
 **Stack:** Pandas, NumPy, Matplotlib, Scikit-learn  
@@ -21,7 +21,7 @@ Predict California district median house value from census-block features. Uses 
 
 ---
 
-### 3. Iris Flower Classification
+### 3. Iris Flower Classification 🌸
 Classify iris flowers into three species (*Setosa*, *Versicolor*, *Virginica*) from sepal/petal measurements. Trains and compares four classifiers: Decision Tree, KNN, SVM, and Logistic Regression with full EDA, pairplots, correlation heatmaps, and decision boundary visualization.
 
 **Stack:** Pandas, NumPy, Seaborn, Matplotlib, Scikit-learn  
@@ -29,7 +29,7 @@ Classify iris flowers into three species (*Setosa*, *Versicolor*, *Virginica*) f
 
 ---
 
-### 4. SONAR Rock vs. Mine
+### 4. SONAR Rock vs. Mine 💣
 Binary classification to distinguish rocks from mines using SONAR frequency-energy readings. Uses Logistic Regression with train/test split and accuracy evaluation.
 
 **Stack:** Pandas, NumPy, Scikit-learn  
@@ -37,7 +37,7 @@ Binary classification to distinguish rocks from mines using SONAR frequency-ener
 
 ---
 
-### 5. Build Your Own Linear Regression
+### 5. Build Your Own Linear Regression 
 A from-scratch implementation of simple linear regression using the closed-form OLS normal equations — no `LinearRegression()` from scikit-learn. Implemented as a `MyLR` class with `.fit()` and `.predict()` methods, validated against scikit-learn's output. Uses CGPA → placement salary data.
 
 **Stack:** NumPy, Pandas, Matplotlib, Scikit-learn (for splitting only)  
