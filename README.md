@@ -84,10 +84,10 @@ A from-scratch implementation of a 3-layer neural network (input → hidden → 
 ├── Housing Price Prediction/          # California housing
 ├── Iris Flower Classification/        # Species classification
 ├── SONAR-rock-or-mine/                # Rock vs mine detection
-└── Titanic Survival Prediction/       # Passenger survival
-└── Heart Disease Prediction/          # Disease prediction
-└── Credit Card Fraud Detection/       # Prediction of fraudulent transactions
-└── building-neural-net-from-scratch/  # Classify handwritten digits
+├── Titanic Survival Prediction/       # Passenger survival
+├── Heart Disease Prediction/          # Disease prediction
+├── Credit Card Fraud Detection/       # Prediction of fraudulent transactions
+├── building-neural-net-from-scratch/  # Classify handwritten digits
 ```
 
 
