@@ -49,8 +49,8 @@ A from-scratch implementation of simple linear regression using the closed-form 
 
 Binary classification problem: predict presence of heart disease from clinical attributes (age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, max heart rate, exercise-induced angina, and more). Suggested Improvements: Include EDA, correlation analysis, and comparison across multiple classifiers (e.g. Logistic Regression, KNN, Random Forest, SVM).
 
-**Stack:** Pandas, NumPy, Scikit-learn
-**Dataset:** UCI Heart Disease (Cleveland)
+**Stack:** NumPy, Pandas, Scikit-learn 
+**Dataset:** UCI Heart Disease Prediction (Cleveland)
 
 ---
 
@@ -58,8 +58,8 @@ Binary classification problem: predict presence of heart disease from clinical a
 
 Binary classification problem: detect fraudulent transactions from anonymized transaction data (features V1–V28, Time, and Amount). Built a Logistic Regression model and evaluated performance using scikit-learn's accuracy_score.
 
-**Stack:** Pandas, NumPy, Scikit-learn
-**Dataset:** Credit Card Fraude Detection (Kaggle)
+**Stack:** NumPy, Pandas, Scikit-learn 
+**Dataset:** Credit Card Fraud Detection (Kaggle - ULB)
 
 ---
 
