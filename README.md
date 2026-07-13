@@ -54,7 +54,7 @@ Binary classification problem: predict presence of heart disease from clinical a
 
 ---
 
-### 6. Credit Card Fraud Detection 💳
+### 7. Credit Card Fraud Detection 💳
 
 Binary classification problem: detect fraudulent transactions from anonymized transaction data (features V1–V28, Time, and Amount). Built a Logistic Regression model and evaluated performance using scikit-learn's accuracy_score.
 
