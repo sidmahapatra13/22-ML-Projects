@@ -45,6 +45,15 @@ A from-scratch implementation of simple linear regression using the closed-form 
 
 ---
 
+### 6. Heart Disease Prediction ❤️
+
+Binary classification problem: predict presence of heart disease from clinical attributes (age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, max heart rate, exercise-induced angina, and more). Includes EDA, correlation analysis, and comparison across multiple classifiers (e.g. Logistic Regression, KNN, Random Forest, SVM).
+
+**Stack:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn
+**Dataset:** UCI Heart Disease (Cleveland)
+
+---
+
 ## Repository Structure
 
 ```
