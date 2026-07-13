@@ -65,6 +65,16 @@ Binary classification problem: detect fraudulent transactions from anonymized tr
 
 ---
 
+### 6. Building a Neural Network from Scratch 🧠
+[#6-building-a-neural-network-from-scratch-](#6-building-a-neural-network-from-scratch-)
+
+A from-scratch implementation of a 3-layer neural network (input → hidden → output) built using only NumPy — no TensorFlow/PyTorch — to classify handwritten digits from the MNIST dataset. Manually derives forward propagation (ReLU + Softmax activations) and backpropagation (gradients via chain rule for both layers), with weights and biases updated through vanilla gradient descent.
+
+**Stack:** NumPy, Pandas, Matplotlib  
+**Dataset:** MNIST (handwritten digits, 28×28 grayscale)
+
+---
+
 ## Repository Structure
 
 ```
