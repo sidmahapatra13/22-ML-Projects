@@ -69,7 +69,7 @@ Binary classification problem: detect fraudulent transactions from anonymized tr
 
 A from-scratch implementation of a 3-layer neural network (input → hidden → output) built using only NumPy — no TensorFlow/PyTorch — to classify handwritten digits from the MNIST dataset. Manually derives forward propagation (ReLU + Softmax activations) and backpropagation (gradients via chain rule for both layers), with weights and biases updated through vanilla gradient descent.
 
-**Stack:** NumPy, Pandas, Matplotlib  
+**Stack:** NumPy, Pandas (only for data retrieval) 
 **Dataset:** MNIST (handwritten digits, 28×28 grayscale)
 
 ---
@@ -84,6 +84,9 @@ A from-scratch implementation of a 3-layer neural network (input → hidden → 
 ├── Iris Flower Classification/        # Species classification
 ├── SONAR-rock-or-mine/                # Rock vs mine detection
 └── Titanic Survival Prediction/       # Passenger survival
+└── Heart Disease Prediction/          # Disease prediction
+└── Credit Card Fraud Detection/       # Prediction of fraudulent transactions
+└── building-neural-net-from-scratch/  # Classify handwritten digits
 ```
 
 
