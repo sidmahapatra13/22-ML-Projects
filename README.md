@@ -37,7 +37,7 @@ Binary classification to distinguish rocks from mines using SONAR frequency-ener
 
 ---
 
-### 5. Build Your Own Linear Regression 
+### 5. Build Your Own Linear Regression 〰️
 A from-scratch implementation of simple linear regression using the closed-form OLS normal equations — no `LinearRegression()` from scikit-learn. Implemented as a `MyLR` class with `.fit()` and `.predict()` methods, validated against scikit-learn's output. Uses CGPA → placement salary data.
 
 **Stack:** NumPy, Pandas, Matplotlib, Scikit-learn (for splitting only)  
@@ -47,10 +47,19 @@ A from-scratch implementation of simple linear regression using the closed-form 
 
 ### 6. Heart Disease Prediction 🫀
 
-Binary classification problem: predict presence of heart disease from clinical attributes (age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, max heart rate, exercise-induced angina, and more). Includes EDA, correlation analysis, and comparison across multiple classifiers (e.g. Logistic Regression, KNN, Random Forest, SVM).
+Binary classification problem: predict presence of heart disease from clinical attributes (age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, max heart rate, exercise-induced angina, and more). Suggested Improvements: Include EDA, correlation analysis, and comparison across multiple classifiers (e.g. Logistic Regression, KNN, Random Forest, SVM).
 
-**Stack:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn
+**Stack:** Pandas, NumPy, Scikit-learn
 **Dataset:** UCI Heart Disease (Cleveland)
+
+---
+
+### 6. Credit Card Fraud Detection 💳
+
+Binary classification problem: detect fraudulent transactions from anonymized transaction data (features V1–V28, Time, and Amount). Built a Logistic Regression model and evaluated performance using scikit-learn's accuracy_score.
+
+**Stack:** Pandas, NumPy, Scikit-learn
+**Dataset:** Credit Card Fraude Detection (Kaggle)
 
 ---
 
