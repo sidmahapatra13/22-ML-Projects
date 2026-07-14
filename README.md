@@ -84,21 +84,3 @@ Binary image classification using a Convolutional Neural Network to distinguish 
 **Dataset:** Kaggle Dogs vs. Cats (salader/dogsvscats)
 
 ---
-
-## Repository Structure
-
-```
-22 ML Projects/
-├── README.md                          ← this file
-├── build-your-own-linear-regression/  # OLS from scratch
-├── Housing Price Prediction/          # California housing
-├── Iris Flower Classification/        # Species classification
-├── SONAR-rock-or-mine/                # Rock vs mine detection
-├── Titanic Survival Prediction/       # Passenger survival
-├── Heart Disease Prediction/          # Disease prediction
-├── Credit Card Fraud Detection/       # Prediction of fraudulent transactions
-├── building-neural-net-from-scratch/  # Classify handwritten digits
-├── Simple Image Classifier/           # Animal Classification
-```
-
-
