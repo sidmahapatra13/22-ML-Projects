@@ -75,6 +75,15 @@ A from-scratch implementation of a 3-layer neural network (input → hidden → 
 
 ---
 
+### 9. Dog vs Cat Image Classification 🐶🐱
+
+Binary image classification using a Convolutional Neural Network to distinguish dog and cat photos. Includes image preprocessing (resizing, normalization) and a custom CNN architecture (3× `Conv2D` + `BatchNormalization` + `MaxPooling2D` blocks, followed by `Dense` and `Dropout` layers). Trained for 10 epochs on a T4 GPU (Google Colab). Best validation accuracy ~81.7%, though the model shows signs of overfitting (train accuracy reached 96%). Next steps to fix overfitting: Add `EarlyStopping`: stops training once `val_loss` stops improving. `patience=3` waits 3 epochs before stopping; Increase `Dropout`: currently 0.1 — try 0.3–0.5 to force the network to rely less on specific neurons.
+
+**Stack:** TensorFlow/Keras, NumPy, Matplotlib, OpenCV
+**Dataset:** Kaggle Dogs vs. Cats (salader/dogsvscats)
+
+---
+
 ## Repository Structure
 
 ```
@@ -88,6 +97,7 @@ A from-scratch implementation of a 3-layer neural network (input → hidden → 
 ├── Heart Disease Prediction/          # Disease prediction
 ├── Credit Card Fraud Detection/       # Prediction of fraudulent transactions
 ├── building-neural-net-from-scratch/  # Classify handwritten digits
+├── Simple Image Classifier/           # Animal Classification
 ```
 
 
