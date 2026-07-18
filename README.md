@@ -84,3 +84,13 @@ Binary image classification using a Convolutional Neural Network to distinguish 
 **Dataset:** Kaggle Dogs vs. Cats (salader/dogsvscats)
 
 ---
+
+## 10. Stock Price Prediction (LSTM) 📈
+
+Time-series forecasting problem: predict next-day closing price for `^NSEI` using an LSTM-based sequence model built in PyTorch. Historical OHLCV data is windowed into sequences and fed through stacked LSTM layers to capture temporal dependencies. The model tracks the overall trend well but currently lags behind sharp reversals and underestimates the magnitude of sudden spikes/dips. Test RMSE ~595.94.
+
+**Stack:** PyTorch, Pandas, NumPy, Matplotlib, yfinance, sklearn
+
+> **Note:** This is an early iteration — as I learn more about tuning neural network parameters (sequence length, hidden units, layers, learning rate schedules, etc.), I plan to revisit and optimize this further. The current error and prediction plots below are included as a baseline for comparison against future versions.
+
+---
