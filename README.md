@@ -94,3 +94,13 @@ Time-series forecasting problem: predict next-day closing price for `^NSEI` usin
 > **Note:** This is an early iteration — as I learn more about tuning neural network parameters (sequence length, hidden units, layers, learning rate schedules, etc.), I plan to revisit and optimize this further. The current error and prediction plots below are included as a baseline for comparison against future versions.
 
 ---
+
+## 11. Movie Recommender System 🎬
+
+Content-based recommendation problem: suggest similar movies based on combined similarity of overview, genres, keywords, top cast, and director. Metadata is merged, parsed, and compressed into a single "tags" string per movie, then stemmed and vectorized using a Bag-of-Words model (`CountVectorizer`, 5000 features). Recommendations are generated via cosine similarity, returning the top 5 closest movies.
+
+**Stack:** NumPy, Pandas, Scikit-learn, NLTK
+
+**Dataset:** TMDB 5000 Movie Dataset (Kaggle)
+
+---
