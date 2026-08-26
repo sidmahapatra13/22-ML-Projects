@@ -99,7 +99,9 @@ Time-series forecasting problem: predict next-day closing price for `^NSEI` usin
 
 Content-based recommendation problem: suggest similar movies based on combined similarity of overview, genres, keywords, top cast, and director. Metadata is merged, parsed, and compressed into a single "tags" string per movie, then stemmed and vectorized using a Bag-of-Words model (`CountVectorizer`, 5000 features). Recommendations are generated via cosine similarity, returning the top 5 closest movies.
 
-**Stack:** NumPy, Pandas, Scikit-learn, NLTK
+Includes a Streamlit frontend for selecting a movie and viewing ranked recommendations with metadata.
+
+**Stack:** NumPy, Pandas, Scikit-learn, NLTK, Streamlit
 
 **Dataset:** TMDB 5000 Movie Dataset (Kaggle)
 
