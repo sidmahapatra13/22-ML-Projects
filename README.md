@@ -1,108 +1,232 @@
 # 22 ML Projects
 
-> **Status:** 🚧 In Progress — more projects coming as I work through the series.
+A working-through of machine learning, one project at a time — classification, regression,
+recommendation, and a few things rebuilt from scratch with nothing but NumPy so the maths
+stops being a black box.
 
-A growing collection of machine learning projects built from scratch — covering classification, regression, and model comparison pipelines. Each project is a self-contained Jupyter notebook with data, EDA, model training, and evaluation.
+> **Status:** 11 of 22 done. Each project is a self-contained folder with its data, a notebook
+> carrying the full EDA → training → evaluation path, and notes on what worked and what didn't.
 
-## Completed Projects
+---
+
+## The projects
+
+| # | Project | Task | Result | Stack |
+|---|---------|------|--------|-------|
+| 1 | [Titanic Survival Prediction](./Titanic%20Survival%20Prediction) 🛳️ | Binary classification | ~83.6% CV accuracy | scikit-learn |
+| 2 | [Housing Price Prediction](./Housing%20Price%20Prediction) 🏡 | Regression | RMSE on stratified hold-out | scikit-learn |
+| 3 | [Iris Flower Classification](./Iris%20Flower%20Classification) 🌸 | Multiclass classification | 0.978 (SVM, logistic regression) | scikit-learn |
+| 4 | [SONAR Rock vs. Mine](./SONAR-rock-or-mine) 💣 | Binary classification | 0.857 test accuracy | scikit-learn |
+| 5 | [Linear Regression from Scratch](./build-your-own-linear-regression) 〰️ | Regression | R² 0.781, matches scikit-learn | NumPy only |
+| 6 | [Heart Disease Prediction](./Heart%20Disease%20Prediction) 🫀 | Binary classification | 0.803 test accuracy | scikit-learn |
+| 7 | [Credit Card Fraud Detection](./Credit%20Card%20Fraud%20Detection) 💳 | Imbalanced classification | Precision/recall/PR-AUC | scikit-learn |
+| 8 | [Neural Network from Scratch](./building-neural-net-from-scratch) 🧠 | MNIST digits | ~66% after 100 GD steps | NumPy only |
+| 9 | [Dog vs Cat Classifier](./Simple%20Image%20Classifier) 🐶🐱 | Image classification | 81.7% best val accuracy | TensorFlow/Keras |
+| 10 | [Stock Price Prediction](./Stock%20Market%20Prediction) 📈 | Time-series forecasting | Test RMSE 595.94 | PyTorch |
+| 11 | [Movie Recommender System](./Movie%20Recommender%20System) 🎬 | Content-based recommendation | Streamlit app included | scikit-learn, NLTK |
+
+Two notebooks (Titanic, Housing) are committed without cell outputs — clone and run them to see
+the numbers. Everything else renders with its outputs on GitHub.
+
+---
+
+## Running any of this
+
+Each project reads its data with a relative path, so run the notebook from inside its own folder:
+
+```bash
+git clone https://github.com/sidmahapatra13/22-ML-Projects.git
+cd 22-ML-Projects
+
+python3 -m venv .venv && source .venv/bin/activate
+pip install numpy pandas matplotlib seaborn scikit-learn jupyter
+
+cd "Iris Flower Classification" && jupyter lab
+```
+
+Three projects need extras: `Movie Recommender System` and `Stock Market Prediction` each ship a
+`requirements.txt`, and `Simple Image Classifier` needs TensorFlow (it was written for Colab on a
+T4 GPU).
+
+### The Streamlit app
+
+The movie recommender has a frontend:
+
+```bash
+cd "Movie Recommender System"
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+![Movie Recommender Streamlit preview](./Movie%20Recommender%20System/assets/streamlit-preview.png)
+
+### Tests
+
+The recommender's logic is covered by pytest:
+
+```bash
+pip install pytest pandas scikit-learn nltk streamlit
+pytest tests/
+```
+
+### Datasets
+
+Most data is committed alongside its notebook. Two are too large and need a download first:
+
+| Project | Dataset | Where |
+|---|---|---|
+| Credit Card Fraud Detection | `creditcard.csv` | [Kaggle — ULB](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) |
+| Neural Network from Scratch | `train.csv` | [Kaggle — Digit Recognizer](https://www.kaggle.com/competitions/digit-recognizer/data) |
+
+`Simple Image Classifier` pulls `salader/dogsvscats` through the Kaggle API from inside the notebook.
+
+---
+
+## Notes on each project
 
 ### 1. Titanic Survival Prediction 🛳️
-Classic binary classification problem: predict passenger survival using logistic regression, decision trees, KNN, random forest, SVC, and a voting classifier. Includes feature engineering from `Cabin`, `Ticket`, and `Name` columns. Best accuracy ~83.6%.
+Predict passenger survival, with most of the work in feature engineering rather than modelling —
+cabin letter and cabin count from `Cabin`, numeric-vs-lettered `Ticket`, and title (Mr., Master.,
+Dr.) pulled out of `Name`. Preprocessing runs through a `ColumnTransformer` with median/mode
+imputation, scaling, and one-hot encoding; four classifiers (logistic regression, KNN, random
+forest, SVC) are compared by 5-fold stratified CV, then tuned with `GridSearchCV` and re-scored.
 
-**Stack:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn
+**Dataset:** Kaggle Titanic
 
 ---
 
 ### 2. Housing Price Prediction 🏡
-Predict California district median house value from census-block features. Uses stratified train/test splits, feature engineering (`rooms_per_house`, `bedrooms_ratio`, `people_per_house`), `ColumnTransformer` preprocessing, and compares Decision Tree, Random Forest (tuned via `GridSearchCV`), and SGDRegressor. Saved pipeline artifact.
+Predict California district median house value from census-block features. Stratified split on
+income category so the train and test sets share the same income distribution, ratio features
+(`rooms_per_house`, `bedrooms_ratio`, `people_per_house`) added inside the pipeline rather than
+before it, and a decision tree, a `GridSearchCV`-tuned random forest, and an SGD-based ridge
+compared by cross-validated RMSE. The winner is picked on CV score and only then scored once on
+the hold-out, and the fitted pipeline is saved to `artifacts/`.
 
-**Stack:** Pandas, NumPy, Matplotlib, Scikit-learn  
 **Dataset:** California Housing
 
 ---
 
 ### 3. Iris Flower Classification 🌸
-Classify iris flowers into three species (*Setosa*, *Versicolor*, *Virginica*) from sepal/petal measurements. Trains and compares four classifiers: Decision Tree, KNN, SVM, and Logistic Regression with full EDA, pairplots, correlation heatmaps, and decision boundary visualization.
+Classify *Setosa*, *Versicolor*, and *Virginica*. Full EDA first — per-feature histograms split by
+species, a pairplot, and a correlation heatmap — which shows the petal measurements separate the
+classes almost completely, so the models train on petal length and width alone. Decision tree, KNN,
+SVM, and logistic regression are compared, with decision boundaries plotted for the training and
+test sets.
 
-**Stack:** Pandas, NumPy, Seaborn, Matplotlib, Scikit-learn  
 **Dataset:** Fisher's Iris
 
 ---
 
 ### 4. SONAR Rock vs. Mine 💣
-Binary classification to distinguish rocks from mines using SONAR frequency-energy readings. Uses Logistic Regression with train/test split and accuracy evaluation.
+Distinguish rocks from mines using 60 bands of SONAR frequency-energy readings, with logistic
+regression. A small dataset — 208 samples — so the 21-row test set makes the accuracy figure
+noisier than it looks.
 
-**Stack:** Pandas, NumPy, Scikit-learn  
-**Dataset:** Sonar Mines/Rocks (60-band frequency data)
+**Dataset:** UCI Connectionist Bench (Sonar, Mines vs. Rocks)
 
 ---
 
-### 5. Build Your Own Linear Regression 〰️
-A from-scratch implementation of simple linear regression using the closed-form OLS normal equations — no `LinearRegression()` from scikit-learn. Implemented as a `MyLR` class with `.fit()` and `.predict()` methods, validated against scikit-learn's output. Uses CGPA → placement salary data.
+### 5. Linear Regression from Scratch 〰️
+Simple linear regression implemented from the closed-form OLS normal equations, no
+`LinearRegression()` involved:
 
-**Stack:** NumPy, Pandas, Matplotlib, Scikit-learn (for splitting only)  
-**Dataset:** Placement (CGPA vs. package)
+```
+m = Σ (xᵢ - x̄)(yᵢ - ȳ) / Σ (xᵢ - x̄)²
+b = ȳ - m·x̄
+```
+
+Wrapped in a `MyLR` class with the usual `.fit()` / `.predict()` API, then checked against
+scikit-learn — slope and intercept agree to floating-point noise.
+
+**Dataset:** Placement (CGPA → package)
 
 ---
 
 ### 6. Heart Disease Prediction 🫀
+Predict presence of heart disease from 13 clinical attributes — age, sex, chest pain type, resting
+blood pressure, cholesterol, max heart rate, exercise-induced angina, and others — with logistic
+regression on a stratified split.
 
-Binary classification problem: predict presence of heart disease from clinical attributes (age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, max heart rate, exercise-induced angina, and more). Suggested Improvements: Include EDA, correlation analysis, and comparison across multiple classifiers (e.g. Logistic Regression, KNN, Random Forest, SVM).
-
-**Stack:** NumPy, Pandas, Scikit-learn
-
-**Dataset:** UCI Heart Disease Prediction (Cleveland)
+**Dataset:** UCI Heart Disease (Cleveland)
 
 ---
 
 ### 7. Credit Card Fraud Detection 💳
+284,807 transactions, 492 of them fraudulent — 0.172%. The interesting part isn't the model, it's
+the evaluation: the data is split *before* under-sampling so the test set keeps the real fraud rate,
+and results are reported as precision, recall, F1 and PR-AUC rather than accuracy. A
+"predict legitimate for everything" baseline scores ~99.8% accuracy and catches zero fraud, which
+is the whole point.
 
-Binary classification problem: detect fraudulent transactions from anonymized transaction data (features V1–V28, Time, and Amount). Built a Logistic Regression model and evaluated performance using scikit-learn's accuracy_score.
-
-**Stack:** NumPy, Pandas, Scikit-learn 
-
-**Dataset:** Credit Card Fraud Detection (Kaggle - ULB)
+**Dataset:** Credit Card Fraud Detection (Kaggle, ULB) — download required
 
 ---
 
-### 8. Building a Neural Network from Scratch 🧠
+### 8. Neural Network from Scratch 🧠
+A three-layer network (784 → 10 → 10) for MNIST digits in pure NumPy. Forward propagation with ReLU
+and a numerically stable softmax, backpropagation derived by hand through both layers, and vanilla
+gradient descent — no TensorFlow, no PyTorch, no autograd.
 
-A from-scratch implementation of a 3-layer neural network (input → hidden → output) built using only NumPy — no TensorFlow/PyTorch — to classify handwritten digits from the MNIST dataset. Manually derives forward propagation (ReLU + Softmax activations) and backpropagation (gradients via chain rule for both layers), with weights and biases updated through vanilla gradient descent.
-
-**Stack:** NumPy, Pandas (only for data retrieval)
-
-**Dataset:** MNIST (handwritten digits, 28×28 grayscale)
+**Dataset:** MNIST via Kaggle Digit Recognizer — download required
 
 ---
 
 ### 9. Dog vs Cat Image Classification 🐶🐱
+A CNN built from three `Conv2D` → `BatchNormalization` → `MaxPooling2D` blocks, then dense layers
+with dropout. Trained 10 epochs on a Colab T4. Validation accuracy peaks at 81.7% while training
+accuracy climbs to 96% and validation loss starts rising — textbook overfitting, and the plots show
+it clearly. The fix is `EarlyStopping` on `val_loss` plus heavier dropout (0.1 is far too light) and
+data augmentation.
 
-Binary image classification using a Convolutional Neural Network to distinguish dog and cat photos. Includes image preprocessing (resizing, normalization) and a custom CNN architecture (3× `Conv2D` + `BatchNormalization` + `MaxPooling2D` blocks, followed by `Dense` and `Dropout` layers). Trained for 10 epochs on a T4 GPU (Google Colab). Best validation accuracy ~81.7%, though the model shows signs of overfitting (train accuracy reached 96%). Next steps to fix overfitting: Add `EarlyStopping`: stops training once `val_loss` stops improving. `patience=3` waits 3 epochs before stopping; Increase `Dropout`: currently 0.1 — try 0.3–0.5 to force the network to rely less on specific neurons.
-
-**Stack:** TensorFlow/Keras, NumPy, Matplotlib, OpenCV
-
-**Dataset:** Kaggle Dogs vs. Cats (salader/dogsvscats)
-
----
-
-## 10. Stock Price Prediction (LSTM) 📈
-
-Time-series forecasting problem: predict next-day closing price for `^NSEI` using an LSTM-based sequence model built in PyTorch. Historical OHLCV data is windowed into sequences and fed through stacked LSTM layers to capture temporal dependencies. The model tracks the overall trend well but currently lags behind sharp reversals and underestimates the magnitude of sudden spikes/dips. Test RMSE ~595.94.
-
-**Stack:** PyTorch, Pandas, NumPy, Matplotlib, yfinance, sklearn
-
-> **Note:** This is an early iteration — as I learn more about tuning neural network parameters (sequence length, hidden units, layers, learning rate schedules, etc.), I plan to revisit and optimize this further. The current error and prediction plots below are included as a baseline for comparison against future versions.
+**Dataset:** Kaggle Dogs vs. Cats (`salader/dogsvscats`)
 
 ---
 
-## 11. Movie Recommender System 🎬
+### 10. Stock Price Prediction (LSTM) 📈
+Next-day close for `^NSEI`, windowed into 30-day sequences and run through stacked LSTM layers in
+PyTorch, with LayerNorm and Xavier initialisation.
 
-Content-based recommendation problem: suggest similar movies based on combined similarity of overview, genres, keywords, top cast, and director. Metadata is merged, parsed, and compressed into a single "tags" string per movie, then stemmed and vectorized using a Bag-of-Words model (`CountVectorizer`, 5000 features). Recommendations are generated via cosine similarity, returning the top 5 closest movies.
+The model tracks the trend but lags sharp reversals and understates sudden spikes — which is the
+honest result, and a known trap with price-level forecasting: a model that simply echoes yesterday's
+close looks good on RMSE. The next iteration is to predict *returns* instead of levels and to score
+against that naive baseline.
 
-Includes a Streamlit frontend for selecting a movie and viewing ranked recommendations with metadata.
+**Dataset:** Yahoo Finance via `yfinance`
 
-**Stack:** NumPy, Pandas, Scikit-learn, NLTK, Streamlit
+---
+
+### 11. Movie Recommender System 🎬
+Content-based recommendations over the TMDB 5000 dataset. Overview, genres, keywords, top-3 cast,
+and director are merged into a single "tags" string per film, stemmed, vectorised with a
+bag-of-words `CountVectorizer` (5000 features), and ranked by cosine similarity.
+
+Ships with a Streamlit frontend and a pytest suite over the recommendation logic. The movie and
+credits tables are joined on TMDB id rather than title — three titles are duplicated in this dataset
+(*Batman*, *The Host*, *Out of the Blue*) and joining on title cross-joins them into each other's
+cast lists.
 
 **Dataset:** TMDB 5000 Movie Dataset (Kaggle)
 
 ---
+
+## Repo layout
+
+```
+22-ML-Projects/
+├── <project folder>/
+│   ├── *.ipynb          # the notebook
+│   ├── *.csv            # data, where it fits in git
+│   └── README.md        # project-specific notes
+├── Movie Recommender System/
+│   ├── app.py           # Streamlit frontend
+│   ├── recommender.py   # recommendation logic
+│   └── data/            # zipped TMDB CSVs
+└── tests/               # pytest suite
+```
+
+## What's next
+
+Eleven more projects, and a few revisits: returns-based forecasting for the LSTM, `EarlyStopping`
+and augmentation for the CNN, and cross-validation for the small-dataset projects (Heart Disease and
+SONAR) where a single split doesn't say much.
