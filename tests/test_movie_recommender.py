@@ -167,3 +167,61 @@ def test_recommend_movies_raises_for_unknown_title():
         assert "Missing Movie" in str(exc)
     else:
         raise AssertionError("Expected ValueError for an unknown movie title")
+
+
+def test_build_movie_features_does_not_cross_join_duplicate_titles():
+    recommender = load_recommender_module()
+    movies = pd.DataFrame(
+        [
+            {
+                "id": 10,
+                "title": "Batman",
+                "overview": "A caped hero patrols Gotham.",
+                "genres": '[{"name": "Action"}]',
+                "keywords": '[{"name": "vigilante"}]',
+                "vote_average": 7.2,
+                "vote_count": 200,
+                "release_date": "1989-06-23",
+                "runtime": 126,
+                "popularity": 30.0,
+            },
+            {
+                "id": 11,
+                "title": "Batman",
+                "overview": "A campier caped hero patrols Gotham.",
+                "genres": '[{"name": "Comedy"}]',
+                "keywords": '[{"name": "camp"}]',
+                "vote_average": 6.1,
+                "vote_count": 80,
+                "release_date": "1966-07-30",
+                "runtime": 105,
+                "popularity": 9.0,
+            },
+        ]
+    )
+    credits = pd.DataFrame(
+        [
+            {
+                "movie_id": 10,
+                "title": "Batman",
+                "cast": '[{"name": "Michael Dark"}]',
+                "crew": '[{"job": "Director", "name": "Tim Gothic"}]',
+            },
+            {
+                "movie_id": 11,
+                "title": "Batman",
+                "cast": '[{"name": "Adam Bright"}]',
+                "crew": '[{"job": "Director", "name": "Leslie Camp"}]',
+            },
+        ]
+    )
+
+    features = recommender.build_movie_features(movies, credits)
+
+    # Joining on title would fan two rows out into four.
+    assert len(features) == 2
+    by_id = features.set_index("movie_id")
+    assert by_id.loc[10, "director"] == "Tim Gothic"
+    assert by_id.loc[10, "cast_list"] == ["Michael Dark"]
+    assert by_id.loc[11, "director"] == "Leslie Camp"
+    assert by_id.loc[11, "cast_list"] == ["Adam Bright"]

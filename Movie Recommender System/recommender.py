@@ -88,7 +88,14 @@ def _stem_text(text: str) -> str:
 
 
 def build_movie_features(movies: pd.DataFrame, credits: pd.DataFrame) -> pd.DataFrame:
-    merged = movies.merge(credits, on="title")
+    # Merge on the TMDB id, not the title: three titles are duplicated in this
+    # dataset (Batman, The Host, Out of the Blue) and joining on title produces
+    # a cross product that attaches the wrong cast and crew to those films.
+    merged = movies.merge(
+        credits.drop(columns=["title"]),
+        left_on="id",
+        right_on="movie_id",
+    )
     useful_columns = [
         "id",
         "title",
